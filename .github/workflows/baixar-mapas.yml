@@ -1,0 +1,33 @@
+name: Baixar mapas Tropical Tidbits
+
+on:
+  schedule:
+    # 8:40 no horário de Brasília (UTC-3) = 11:40 UTC
+    - cron: '40 11 * * *'
+  workflow_dispatch:  # permite rodar manualmente pela aba "Actions" no GitHub
+
+jobs:
+  baixar-mapas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install requests
+
+      - name: Rodar o script de download
+        run: python baixar_mapas_tidbits.py
+
+      - name: Salvar os mapas no repositório
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add mapas_tidbits
+          git diff --cached --quiet || git commit -m "Mapas do dia $(date +'%Y-%m-%d')"
+          git push
