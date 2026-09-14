@@ -2,8 +2,8 @@ name: Baixar mapas Tropical Tidbits
 
 on:
   schedule:
-    # 8:40 no horário de Brasília (UTC-3) = 11:40 UTC
-    - cron: '40 11 * * *'
+    # 9:20 no horário de Brasília (UTC-3) = 12:20 UTC
+    - cron: '20 12 * * *'
   workflow_dispatch:  # permite rodar manualmente pela aba "Actions" no GitHub
 
 jobs:
